@@ -61,6 +61,13 @@ export const metadata: Metadata = {
     title: 'Sensorama | UX Research, Service Design, Product Design & Digital Transformation',
     description: 'Sensorama is an innovation consultancy helping companies solve complex problems through UX research, service design, product design, and digital transformation.',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 const organizationSchema = {
