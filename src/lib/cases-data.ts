@@ -23,6 +23,8 @@ export type CaseRecord = {
   industry: Industry;
   visual: "jj" | "nubank" | "bees" | "itau" | "contactCenter" | "branchResearch" | "marketplaceExpansion";
   heroAlt: string;
+  /** Imagem de thumbnail/hero do case (em /images/cases/...). Quando ausente, a listagem usa um placeholder. */
+  heroImage?: string;
   hidden?: boolean;
   content: Record<Lang, CaseContent>;
 };
@@ -192,6 +194,7 @@ export const CASES: CaseRecord[] = [
     industry: "consumer-goods",
     visual: "marketplaceExpansion",
     heroAlt: "International B2B marketplace field research across 13 countries",
+    heroImage: "/images/cases/marketplace-hero.png",
     content: {
       en: {
         industryLabel: "Consumer Goods (FMCG)",

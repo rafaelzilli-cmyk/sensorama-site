@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useContext, createContext, useRef } from "react";
+import { useState, useEffect, useContext, createContext, useRef } from "react";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -647,43 +647,40 @@ function CaseVisualBranchResearch() {
   );
 }
 
-function CaseVisualMarketplaceExpansion() {
-  // 13 barras com alturas variadas, representando os múltiplos mercados pesquisados.
-  // TODO: substituir por imagem real em /images/cases/ quando disponível.
-  const heights = [34, 52, 28, 60, 44, 38, 56, 30, 48, 64, 36, 50, 42];
-  const barW = 18;
-  const gap = 10;
-  const baseY = 200;
-  const startX = 20;
+const MP_STATS: Record<Lang, string> = {
+  pt: "13 países · 5 continentes · 60+ estabelecimentos",
+  en: "13 countries · 5 continents · 60+ establishments",
+  es: "13 países · 5 continentes · 60+ establecimientos",
+};
+
+function CaseVisualMarketplaceExpansion({ statsLabel }: { statsLabel?: string }) {
+  // Imagem real do case (mesma usada na listagem e no hero da página do case).
+  // Abaixo da dobra na home → loading lazy (sem priority, para não competir com o LCP do hero).
   return (
-    <div style={{ width: "100%", borderRadius: 12, overflow: "hidden", aspectRatio: "16/10", backgroundColor: "#0A0F2C", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-      <svg viewBox="0 0 400 250" width="100%" height="100%" role="img" aria-label="Global field research across 13 countries illustration" style={{ maxWidth: "100%", maxHeight: "100%" }}>
-        <text x="20" y="40" fontFamily="'Unbounded', sans-serif" fontSize="14" fontWeight="700" fill="#FFFFFF">Global Field Research</text>
-        <text x="20" y="58" fontFamily="'Open Sans', sans-serif" fontSize="11" fill="rgba(255,255,255,0.6)">13 countries · 5 continents · 60+ establishments</text>
-        {heights.map((h, i) => (
-          <rect
-            key={i}
-            x={startX + i * (barW + gap)}
-            y={baseY - h}
-            width={barW}
-            height={h}
-            rx="2"
-            fill={i % 3 === 0 ? "#43E58E" : "#2F5BFF"}
-            opacity="0.85"
-          />
-        ))}
-        <line x1="16" y1={baseY + 2} x2="384" y2={baseY + 2} stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-      </svg>
+    <div style={{ position: "relative", width: "100%", borderRadius: 12, overflow: "hidden", aspectRatio: "16/10", backgroundColor: "#0A0F2C" }}>
+      <Image
+        src="/images/cases/marketplace-hero.png"
+        alt="Pesquisa de campo global em 13 países"
+        fill
+        sizes="(max-width: 768px) 100vw, 600px"
+        style={{ objectFit: "cover" }}
+      />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,15,44,0.85) 0%, rgba(10,15,44,0.1) 55%)" }} />
+      {statsLabel && (
+        <p style={{ position: "absolute", left: 18, right: 18, bottom: 16, margin: 0, color: "#FFFFFF", fontFamily: F.body, fontSize: 12, fontWeight: 600, letterSpacing: "0.04em" }}>
+          {statsLabel}
+        </p>
+      )}
     </div>
   );
 }
 
-function CaseVisual({ type }: { type: string }) {
+function CaseVisual({ type, statsLabel }: { type: string; statsLabel?: string }) {
   if (type === "jj") return <CaseVisualJJ />;
   if (type === "nubank") return <CaseVisualNubank />;
   if (type === "contactCenter") return <CaseVisualContactCenter />;
   if (type === "branchResearch") return <CaseVisualBranchResearch />;
-  if (type === "marketplaceExpansion") return <CaseVisualMarketplaceExpansion />;
+  if (type === "marketplaceExpansion") return <CaseVisualMarketplaceExpansion statsLabel={statsLabel} />;
   return <CaseVisualBees />;
 }
 
@@ -816,10 +813,18 @@ export function Navbar({ lang, langUrls, sectionHrefPrefix = "" }: { lang: Lang;
 ═══════════════════════════════════════════════════════════════ */
 function LiteYouTube({ id, title }: { id: string; title: string }) {
   const [play, setPlay] = useState(false);
+
+  // Desktop: autoplay muted automático. Mobile: mantém facade (economia de dados).
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches) {
+      setPlay(true);
+    }
+  }, []);
+
   if (play) {
     return (
       <iframe
-        src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&rel=0`}
+        src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&playsinline=1&controls=0&rel=0`}
         title={title}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
@@ -1089,7 +1094,7 @@ function CaseHighlightsSection({ lang }: { lang: Lang }) {
               <article key={i} style={{ width: `${100 / total}%`, flexShrink: 0 }}>
                 <div className="grid md:grid-cols-2">
                   <div style={{ backgroundColor: B.lightGray, padding: 32, display: "flex", alignItems: "center", justifyContent: "center", borderRight: "1px solid #F0F0F0" }}>
-                    <div style={{ width: "100%" }}><CaseVisual type={cas.visual} /></div>
+                    <div style={{ width: "100%" }}><CaseVisual type={cas.visual} statsLabel={cas.visual === "marketplaceExpansion" ? MP_STATS[lang] : undefined} /></div>
                   </div>
                   <div style={{ padding: "40px 44px", backgroundColor: B.white }}>
                     <span style={{ display: "inline-block", backgroundColor: "#E8ECFF", color: B.blue, padding: "4px 14px", borderRadius: 20, fontFamily: F.body, fontSize: 12, fontWeight: 600, marginBottom: 20 }}>{cas.label}</span>

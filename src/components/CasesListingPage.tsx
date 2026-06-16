@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { BRAND_COLORS as B, FONTS as F, type Lang } from '@/lib/constants';
 import { UI, getVisibleCases, type Industry } from '@/lib/cases-data';
 import { SiteLayout } from '@/components/SiteLayout';
@@ -110,8 +111,17 @@ export function CasesListingPage({ lang }: Props) {
                   href={`${langPrefix}/cases/${record.slug}`}
                   style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}
                 >
-                  <div style={{ aspectRatio: '16/9', backgroundColor: B.lightGray }}>
-                    {/* Hero image placeholder. Substituir por <img src={`/images/cases/${record.slug}/hero.jpg`} /> */}
+                  <div style={{ position: 'relative', aspectRatio: '16/9', backgroundColor: B.lightGray, overflow: 'hidden' }}>
+                    {record.heroImage && (
+                      <Image
+                        src={record.heroImage}
+                        alt={c.title}
+                        fill
+                        loading="lazy"
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        style={{ objectFit: 'cover' }}
+                      />
+                    )}
                   </div>
                   <div style={{ padding: 24 }}>
                     <span
