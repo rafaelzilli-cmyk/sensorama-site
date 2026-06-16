@@ -1,22 +1,29 @@
 import type { Metadata } from 'next';
 import { CookiePolicyPage } from '@/components/CookiePolicyPage';
 import { SITE_URL } from '@/lib/constants';
+import { UI } from '@/lib/cases-data';
+import { pageMetadata, buildBreadcrumb } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const metadata: Metadata = {
-  title: 'Aviso de Cookies | Sensorama Design',
-  description: 'Aviso de cookies del sitio Sensorama Design.',
-  alternates: {
-    canonical: `${SITE_URL}/es/cookie-policy`,
-    languages: {
-      'pt-BR': `${SITE_URL}/cookie-policy`,
-      'en': `${SITE_URL}/en/cookie-policy`,
-      'es': `${SITE_URL}/es/cookie-policy`,
-      'x-default': `${SITE_URL}/cookie-policy`,
-    },
-  },
-  openGraph: { locale: 'es_ES' },
-};
+const TITLE = 'Aviso de Cookies | Sensorama Design';
+const DESCRIPTION = 'Aviso de cookies del sitio Sensorama Design.';
+
+export const metadata: Metadata = pageMetadata({
+  lang: 'es',
+  path: '/cookie-policy',
+  title: TITLE,
+  description: DESCRIPTION,
+});
 
 export default function CookieES() {
-  return <CookiePolicyPage lang="es" />;
+  const breadcrumb = buildBreadcrumb([
+    { name: UI.es.breadcrumbHome, url: `${SITE_URL}/es` },
+    { name: TITLE.split(' | ')[0] },
+  ]);
+  return (
+    <>
+      <JsonLd data={breadcrumb} />
+      <CookiePolicyPage lang="es" />
+    </>
+  );
 }

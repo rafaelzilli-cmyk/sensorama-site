@@ -1,22 +1,29 @@
 import type { Metadata } from 'next';
 import { CookiePolicyPage } from '@/components/CookiePolicyPage';
 import { SITE_URL } from '@/lib/constants';
+import { UI } from '@/lib/cases-data';
+import { pageMetadata, buildBreadcrumb } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const metadata: Metadata = {
-  title: 'Cookie Notice | Sensorama Design',
-  description: 'Cookie notice for the Sensorama Design website.',
-  alternates: {
-    canonical: `${SITE_URL}/en/cookie-policy`,
-    languages: {
-      'pt-BR': `${SITE_URL}/cookie-policy`,
-      'en': `${SITE_URL}/en/cookie-policy`,
-      'es': `${SITE_URL}/es/cookie-policy`,
-      'x-default': `${SITE_URL}/cookie-policy`,
-    },
-  },
-  openGraph: { locale: 'en_US' },
-};
+const TITLE = 'Cookie Notice | Sensorama Design';
+const DESCRIPTION = 'Cookie notice for the Sensorama Design website.';
+
+export const metadata: Metadata = pageMetadata({
+  lang: 'en',
+  path: '/cookie-policy',
+  title: TITLE,
+  description: DESCRIPTION,
+});
 
 export default function CookieEN() {
-  return <CookiePolicyPage lang="en" />;
+  const breadcrumb = buildBreadcrumb([
+    { name: UI.en.breadcrumbHome, url: `${SITE_URL}/en` },
+    { name: TITLE.split(' | ')[0] },
+  ]);
+  return (
+    <>
+      <JsonLd data={breadcrumb} />
+      <CookiePolicyPage lang="en" />
+    </>
+  );
 }

@@ -1,22 +1,29 @@
 import type { Metadata } from 'next';
 import { PrivacyPolicyPage } from '@/components/PrivacyPolicyPage';
 import { SITE_URL } from '@/lib/constants';
+import { UI } from '@/lib/cases-data';
+import { pageMetadata, buildBreadcrumb } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const metadata: Metadata = {
-  title: 'Privacy Notice | Sensorama Design',
-  description: 'Privacy notice for the Sensorama Design website (LGPD).',
-  alternates: {
-    canonical: `${SITE_URL}/en/privacy-policy`,
-    languages: {
-      'pt-BR': `${SITE_URL}/privacy-policy`,
-      'en': `${SITE_URL}/en/privacy-policy`,
-      'es': `${SITE_URL}/es/privacy-policy`,
-      'x-default': `${SITE_URL}/privacy-policy`,
-    },
-  },
-  openGraph: { locale: 'en_US' },
-};
+const TITLE = 'Privacy Notice | Sensorama Design';
+const DESCRIPTION = 'Privacy notice for the Sensorama Design website (LGPD).';
+
+export const metadata: Metadata = pageMetadata({
+  lang: 'en',
+  path: '/privacy-policy',
+  title: TITLE,
+  description: DESCRIPTION,
+});
 
 export default function PrivacyEN() {
-  return <PrivacyPolicyPage lang="en" />;
+  const breadcrumb = buildBreadcrumb([
+    { name: UI.en.breadcrumbHome, url: `${SITE_URL}/en` },
+    { name: TITLE.split(' | ')[0] },
+  ]);
+  return (
+    <>
+      <JsonLd data={breadcrumb} />
+      <PrivacyPolicyPage lang="en" />
+    </>
+  );
 }

@@ -2,22 +2,25 @@ import type { Metadata } from 'next';
 import { CasesListingPage } from '@/components/CasesListingPage';
 import { UI } from '@/lib/cases-data';
 import { SITE_URL } from '@/lib/constants';
+import { pageMetadata, buildBreadcrumb } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  lang: 'en',
+  path: '/cases',
   title: UI.en.metaListingTitle,
   description: UI.en.metaListingDesc,
-  alternates: {
-    canonical: `${SITE_URL}/en/cases`,
-    languages: {
-      'pt-BR': `${SITE_URL}/cases`,
-      'en': `${SITE_URL}/en/cases`,
-      'es': `${SITE_URL}/es/cases`,
-      'x-default': `${SITE_URL}/cases`,
-    },
-  },
-  openGraph: { locale: 'en_US' },
-};
+});
 
 export default function CasesPageEN() {
-  return <CasesListingPage lang="en" />;
+  const breadcrumb = buildBreadcrumb([
+    { name: UI.en.breadcrumbHome, url: `${SITE_URL}/en` },
+    { name: UI.en.breadcrumbCases },
+  ]);
+  return (
+    <>
+      <JsonLd data={breadcrumb} />
+      <CasesListingPage lang="en" />
+    </>
+  );
 }

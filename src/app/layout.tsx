@@ -69,12 +69,14 @@ export const metadata: Metadata = {
     url: SITE_URL,
     locale: 'pt_BR',
     alternateLocale: ['en_US', 'es_ES'],
+    images: [{ url: '/images/cases/marketplace-hero.png', alt: 'Sensorama Design' }],
   },
   twitter: {
     card: 'summary_large_image',
     site: '@sensoramadesign',
     title: 'Sensorama | UX Research, Service Design, Product Design & Digital Transformation',
     description: 'Sensorama is an innovation consultancy helping companies solve complex problems through UX research, service design, product design, and digital transformation.',
+    images: ['/images/cases/marketplace-hero.png'],
   },
   icons: {
     icon: [
@@ -90,7 +92,7 @@ const organizationSchema = {
   '@type': 'Organization',
   name: 'Sensorama Design',
   url: SITE_URL,
-  logo: `${SITE_URL}/images/logo.png`,
+  logo: `${SITE_URL}/apple-touch-icon.png`,
   description: 'Brazilian innovation consultancy specializing in UX research, service design, product design and digital transformation.',
   foundingDate: '2012',
   sameAs: [

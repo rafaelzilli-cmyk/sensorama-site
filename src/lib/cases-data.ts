@@ -14,6 +14,10 @@ export type CaseContent = {
   title: string;
   subtitle: string;
   shortDescription: string;
+  /** Título otimizado para SEO (~50-60 chars). Quando ausente, deriva de title. */
+  metaTitle?: string;
+  /** Descrição otimizada para SEO (~140-160 chars). Quando ausente, usa shortDescription. */
+  metaDescription?: string;
   tags: string[];
   sections: CaseSection[];
 };
@@ -201,6 +205,8 @@ export const CASES: CaseRecord[] = [
         title: "Field research in consumer goods, around the world",
         subtitle: "Consumer Goods | Global Field Research | 2023",
         shortDescription: "Ethnographic research across 13 countries and 5 continents for B2B marketplace expansion in consumer goods. Deep understanding of small retailers, wholesalers and regional dynamics across multiple cultural contexts. 39 opportunities identified to optimize the platform.",
+        metaTitle: "Field research in 13 countries: consumer goods | Sensorama",
+        metaDescription: "Ethnographic research across 13 countries and 5 continents for B2B marketplace expansion in consumer goods. 60+ establishments visited, 39 opportunities identified.",
         tags: ["UX Research", "Ethnographic Studies", "Market Research", "Service Design"],
         sections: sections("en", MP_EN.overview, MP_EN.challenge, MP_EN.approach, MP_EN.solution, MP_EN.results),
       },
@@ -209,6 +215,8 @@ export const CASES: CaseRecord[] = [
         title: "Pesquisa de campo em bens de consumo, no mundo todo",
         subtitle: "Bens de Consumo | Pesquisa de Campo Global | 2023",
         shortDescription: "Pesquisa etnográfica em 13 países, 5 continentes, para expansão de marketplace B2B em bens de consumo. Compreensão profunda de pequenos varejistas, atacadistas e dinâmicas regionais em múltiplos contextos culturais. 39 oportunidades identificadas para otimização da plataforma.",
+        metaTitle: "Pesquisa de campo em 13 países: bens de consumo | Sensorama",
+        metaDescription: "Pesquisa etnográfica em 13 países e 5 continentes para expansão de marketplace B2B em bens de consumo. 60+ estabelecimentos visitados, 39 oportunidades identificadas.",
         tags: ["UX Research", "Ethnographic Studies", "Market Research", "Service Design"],
         sections: sections("pt", MP_PT.overview, MP_PT.challenge, MP_PT.approach, MP_PT.solution, MP_PT.results),
       },
@@ -217,6 +225,8 @@ export const CASES: CaseRecord[] = [
         title: "Investigación de campo en bienes de consumo, en todo el mundo",
         subtitle: "Bienes de Consumo | Investigación de Campo Global | 2023",
         shortDescription: "Investigación etnográfica en 13 países y 5 continentes para la expansión de un marketplace B2B en bienes de consumo. Comprensión profunda de pequeños minoristas, mayoristas y dinámicas regionales en múltiples contextos culturales. 39 oportunidades identificadas para optimizar la plataforma.",
+        metaTitle: "Investigación de campo en 13 países: bienes de consumo | Sensorama",
+        metaDescription: "Investigación etnográfica en 13 países y 5 continentes para la expansión de un marketplace B2B en bienes de consumo. 60+ establecimientos visitados, 39 oportunidades identificadas.",
         tags: ["UX Research", "Ethnographic Studies", "Market Research", "Service Design"],
         sections: sections("es", MP_ES.overview, MP_ES.challenge, MP_ES.approach, MP_ES.solution, MP_ES.results),
       },
@@ -249,11 +259,11 @@ export const UI = {
     ctaTitle: "Want results like these on your project?",
     ctaButton: "Talk to us",
     notFound: "Case not found.",
-    metaListingTitle: "Cases | Sensorama Design",
-    metaListingDesc: "Digital transformation, UX and product strategy projects for companies like Ambev, Itaú, Nubank and Johnson & Johnson.",
+    metaListingTitle: "Cases | Research, UX and Strategic Design | Sensorama",
+    metaListingDesc: "Explore our field research, UX and strategic design projects for global companies. Real cases with measurable results across different sectors.",
   },
   pt: {
-    breadcrumbHome: "Home",
+    breadcrumbHome: "Início",
     breadcrumbCases: "Cases",
     listingTitle: "Cases",
     listingSubtitle: "Projetos de transformação digital, estratégia de produto e experiência",
@@ -272,11 +282,11 @@ export const UI = {
     ctaTitle: "Quer resultados assim no seu projeto?",
     ctaButton: "Fale com a gente",
     notFound: "Case não encontrado.",
-    metaListingTitle: "Cases | Sensorama Design",
-    metaListingDesc: "Projetos de transformação digital, UX design e estratégia de produto para empresas como Ambev, Itaú, Nubank e Johnson & Johnson.",
+    metaListingTitle: "Cases | Pesquisa, UX e Design Estratégico | Sensorama",
+    metaListingDesc: "Conheça nossos projetos de pesquisa de campo, UX e design estratégico para empresas globais. Cases reais com resultados mensuráveis em diferentes setores.",
   },
   es: {
-    breadcrumbHome: "Home",
+    breadcrumbHome: "Inicio",
     breadcrumbCases: "Casos",
     listingTitle: "Casos",
     listingSubtitle: "Proyectos de transformación digital, estrategia de producto y experiencia",
@@ -295,8 +305,8 @@ export const UI = {
     ctaTitle: "¿Quieres resultados así en tu proyecto?",
     ctaButton: "Habla con nosotros",
     notFound: "Caso no encontrado.",
-    metaListingTitle: "Casos | Sensorama Design",
-    metaListingDesc: "Proyectos de transformación digital, UX y estrategia de producto para empresas como Ambev, Itaú, Nubank y Johnson & Johnson.",
+    metaListingTitle: "Casos | Investigación, UX y Diseño Estratégico | Sensorama",
+    metaListingDesc: "Conoce nuestros proyectos de investigación de campo, UX y diseño estratégico para empresas globales. Casos reales con resultados medibles en distintos sectores.",
   },
 };
 

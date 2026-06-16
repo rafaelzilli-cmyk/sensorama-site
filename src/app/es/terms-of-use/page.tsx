@@ -1,22 +1,29 @@
 import type { Metadata } from 'next';
 import { TermsOfUsePage } from '@/components/TermsOfUsePage';
 import { SITE_URL } from '@/lib/constants';
+import { UI } from '@/lib/cases-data';
+import { pageMetadata, buildBreadcrumb } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const metadata: Metadata = {
-  title: 'Términos de Uso | Sensorama Design',
-  description: 'Términos de uso del sitio Sensorama Design.',
-  alternates: {
-    canonical: `${SITE_URL}/es/terms-of-use`,
-    languages: {
-      'pt-BR': `${SITE_URL}/terms-of-use`,
-      'en': `${SITE_URL}/en/terms-of-use`,
-      'es': `${SITE_URL}/es/terms-of-use`,
-      'x-default': `${SITE_URL}/terms-of-use`,
-    },
-  },
-  openGraph: { locale: 'es_ES' },
-};
+const TITLE = 'Términos de Uso | Sensorama Design';
+const DESCRIPTION = 'Términos de uso del sitio Sensorama Design.';
+
+export const metadata: Metadata = pageMetadata({
+  lang: 'es',
+  path: '/terms-of-use',
+  title: TITLE,
+  description: DESCRIPTION,
+});
 
 export default function TermsES() {
-  return <TermsOfUsePage lang="es" />;
+  const breadcrumb = buildBreadcrumb([
+    { name: UI.es.breadcrumbHome, url: `${SITE_URL}/es` },
+    { name: TITLE.split(' | ')[0] },
+  ]);
+  return (
+    <>
+      <JsonLd data={breadcrumb} />
+      <TermsOfUsePage lang="es" />
+    </>
+  );
 }

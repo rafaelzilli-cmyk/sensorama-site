@@ -1,23 +1,14 @@
 import type { Metadata } from 'next';
 import { LandingPage } from '@/components/LandingPage';
-import { SITE_URL } from '@/lib/constants';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Sensorama | UX Research, Service Design, Product Design & Digital Transformation',
-  description: 'Sensorama is an innovation consultancy helping companies solve complex problems through UX research, service design, product design, and digital transformation.',
-  alternates: {
-    canonical: `${SITE_URL}/en`,
-    languages: {
-      'pt-BR': SITE_URL,
-      'en': `${SITE_URL}/en`,
-      'es': `${SITE_URL}/es`,
-      'x-default': SITE_URL,
-    },
-  },
-  openGraph: {
-    locale: 'en_US',
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  lang: 'en',
+  path: '',
+  title: 'Sensorama Design | Research, UX and Strategic Design',
+  description:
+    'Design and research consultancy connecting insights to measurable impact. Field research, UX, strategic design and AI to solve real business problems.',
+});
 
 export default function HomePageEN() {
   return <LandingPage lang="en" />;
