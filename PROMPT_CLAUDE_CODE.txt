@@ -1,0 +1,365 @@
+============================================================
+PROMPT PARA CLAUDE CODE - SENSORAMA SITE
+============================================================
+
+CONTEXTO
+
+Este é o site institucional da Sensorama Design, uma consultoria
+brasileira de design e inovação. O projeto foi migrado de Figma Make
+(SPA React puro com problemas de SEO) para Next.js 14 com App Router.
+
+A ESTRUTURA BASE já está pronta:
+- Configurações (package.json, next.config, tailwind, tsconfig)
+- Layout raiz com SEO completo, Schema JSON-LD e Analytics
+- Rotas multilíngue PT/EN/ES via App Router
+- Sitemap.xml e robots.txt dinâmicos
+- Dados completos dos 3 cases visíveis (PT/EN/ES) em src/lib/cases-data.ts
+- CaseDetailPage e CasesListingPage funcionais
+
+O QUE VOCÊ PRECISA FAZER
+
+1. Completar a LandingPage (componente em src/components/LandingPage.tsx)
+2. Completar as páginas legais (PrivacyPolicyPage, CookiePolicyPage, TermsOfUsePage)
+3. Criar componentes faltantes (ContactModal, CookieBanner, ConsentManager)
+4. Implementar SVG heroes customizados por case
+5. Ajustar e organizar imagens em public/images/
+6. Testar build e indexação
+
+============================================================
+INSTRUÇÕES DETALHADAS POR TAREFA
+============================================================
+
+TAREFA 1: COMPLETAR A LANDING PAGE
+
+Arquivo destino: src/components/LandingPage.tsx
+Arquivo de referência: reference/LandingPage.original.tsx (1650 linhas)
+
+O arquivo de referência tem TODO o conteúdo da landing page, incluindo:
+- SensoramaLogo (componente SVG inline)
+- Traduções completas em PT/EN/ES (objeto T)
+- Hero com texto + vídeo
+- Marquee de logos de clientes (animação infinita)
+- Case highlights
+- Services
+- Testimonials
+- About + team
+- CTA final
+- Header e Footer
+
+PASSO A PASSO:
+
+1.1. Abrir reference/LandingPage.original.tsx e copiar o conteúdo
+
+1.2. Adaptar imports:
+     - REMOVER: import { Helmet } from "react-helmet-async"
+     - REMOVER: imports de "react-router"
+     - ADICIONAR: import Link from 'next/link'
+     - TROCAR: imports figma:asset/[hash].png por /images/[nome-legivel].png
+
+1.3. Remover bloco completo <Helmet>...</Helmet>
+     (as meta tags ficam no src/app/page.tsx via export const metadata)
+
+1.4. Substituir <a href="/cases"> internos por <Link href="/cases">
+     Manter <a href> apenas para links externos (LinkedIn, Instagram, etc.)
+
+1.5. Substituir imagens:
+     Exemplo: import logoItau from "figma:asset/1d28786bbcfa..." 
+              vira: const logoItau = "/images/logos/itau.png";
+
+1.6. Verificar que o componente recebe e usa { lang }: { lang: "pt" | "en" | "es" }
+
+1.7. Manter intactos:
+     - Objeto T (translations)
+     - Brand tokens (cores, fontes)
+     - Toda a JSX da estrutura visual
+     - GLOBAL_CSS injetado
+     - Componentes filhos
+
+TAREFA 2: COMPLETAR PRIVACY POLICY PAGE
+
+Arquivo destino: src/components/PrivacyPolicyPage.tsx
+Arquivo de referência: reference/PrivacyPolicyPage.original.tsx
+
+A política de privacidade tem 14 seções com conteúdo JURÍDICO OFICIAL
+fornecido pela Data Guide (DPO da Sensorama). Não inventar ou modificar
+nenhum trecho do conteúdo. Apenas adaptar estrutura React.
+
+Adaptações:
+- Remover Helmet
+- Trocar react-router por next/link
+- Manter os 3 idiomas (PT/EN/ES) exatamente como estão
+
+TAREFA 3: COMPLETAR COOKIE POLICY PAGE
+
+Arquivo destino: src/components/CookiePolicyPage.tsx
+Arquivo de referência: reference/CookiePolicyPage.original.tsx
+
+Mesma lógica da Privacy Policy. Conteúdo jurídico oficial, não modificar.
+
+TAREFA 4: COMPLETAR TERMS OF USE PAGE
+
+Arquivo destino: src/components/TermsOfUsePage.tsx
+Arquivo de referência: reference/TermsOfUsePage.original.tsx
+
+Mesma lógica das outras políticas.
+
+TAREFA 5: COMPONENTES FUNCIONAIS
+
+Criar (ou adaptar do reference/components.original/):
+
+5.1. src/components/ContactModal.tsx
+     - Formulário de contato (nome, email, empresa, mensagem)
+     - Integração com EmailJS
+     - Estados: open/close, loading, success, error
+     - Traduções PT/EN/ES
+     - Texto de transparência LGPD abaixo do botão Enviar
+     - Link para /privacy-policy
+     - Referência: reference/components.original/ContactModal.tsx
+
+5.2. src/components/CookieBanner.tsx
+     - Banner LGPD que aparece no primeiro acesso
+     - Opções: Aceitar todos / Apenas necessários / Personalizar
+     - Persistência via localStorage
+     - Referência: reference/components.original/CookieBanner.tsx
+
+5.3. src/components/ConsentManager.tsx
+     - Gerenciamento de preferências de cookies
+     - Categorias: Necessários, Funcionalidade, Análise, Marketing
+     - Referência: reference/components.original/ConsentManager.tsx
+
+5.4. src/components/SiteLayout.tsx (Header + Footer)
+     - Header com logo + nav multilíngue
+     - Footer com links legais + redes sociais
+     - Referência: reference/components.original/SiteLayout.tsx
+
+TAREFA 6: HEROES SVG POR CASE
+
+Os cases visíveis usam SVG inline customizado como hero, não imagens.
+Estão no arquivo reference/CaseDetailPage.original.tsx.
+
+Migrar para src/components/CaseDetailPage.tsx (já tem comentário no código
+indicando onde inserir):
+
+- ContactCenterHero (case "contact-center-diagnostico")
+- BranchResearchHero (case "agencias-aposentados-benchmark")
+- MarketplaceExpansionHero (case "marketplace-b2b-expansao-internacional")
+
+Use o componente switch CaseHero que existe na referência.
+
+TAREFA 7: PÁGINA DETALHADA DO MARKETPLACE GLOBAL
+
+O case "marketplace-b2b-expansao-internacional" tem uma página customizada
+mais elaborada em reference/MarketplaceGlobalCasePage.original.tsx
+(486 linhas) com:
+- Hero com narrativa comercial (o quê, por quê, como)
+- Cards de números em destaque
+- Mapa-múndi com países pesquisados
+- 3 cards dos mercados (África do Sul, Coreia do Sul, Turquia)
+- Timeline de metodologia
+- Grid de resultados
+
+Decisão: criar um componente especial src/components/MarketplaceGlobalCasePage.tsx
+e renderizá-lo no detalhe quando slug === "marketplace-b2b-expansao-internacional",
+substituindo o conteúdo padrão.
+
+Padrão a seguir em src/components/CaseDetailPage.tsx:
+
+  if (slug === "marketplace-b2b-expansao-internacional") {
+    return <MarketplaceGlobalCasePage lang={lang} />;
+  }
+
+TAREFA 8: IMAGENS
+
+Exportar do Figma Make original e organizar em public/images/:
+
+8.1. Estrutura sugerida:
+     public/images/logos/[cliente].png
+     public/images/brand/[asset].png
+     public/images/cases/[slug]/hero.jpg
+     public/images/logo.png  (logo principal Sensorama)
+
+8.2. Renomeações ao migrar:
+     Para cada `figma:asset/[hash].png` no código,
+     identifique no projeto antigo qual imagem é,
+     e substitua por /images/[nome-legivel].png
+
+8.3. Otimizar imagens:
+     - Logos: PNG transparente
+     - Heroes de cases: JPG ou WebP
+     - Imagens grandes (>500KB): otimizar antes de subir
+
+TAREFA 9: TESTE E VALIDAÇÃO
+
+9.1. Rodar localmente:
+     npm install
+     npm run dev
+     Acessar http://localhost:3000
+
+9.2. Testar navegação:
+     - / (PT)
+     - /en
+     - /es
+     - /cases
+     - /cases/contact-center-diagnostico
+     - /cases/marketplace-b2b-expansao-internacional
+     - /privacy-policy
+     - /en/privacy-policy
+     - /sitemap.xml
+     - /robots.txt
+
+9.3. Build de produção:
+     npm run build
+     npm start
+     
+     Verificar:
+     - Build completa sem erros
+     - HTML estático tem conteúdo (View Source)
+     - H1, parágrafos, navegação visíveis no HTML
+
+9.4. Verificar SEO:
+     - Cada página tem title e meta description únicos
+     - Canonical correto
+     - hreflang correto
+     - JSON-LD Organization e FAQ presentes
+     - Sitemap.xml lista todas as URLs (PT/EN/ES)
+     - robots.txt aponta para o sitemap
+
+TAREFA 10: DEPLOY
+
+10.1. GitHub:
+      Criar repositório novo "sensorama-site" na conta GitHub da Sensorama.
+      git init, add, commit, push
+
+10.2. Vercel:
+      Criar conta Vercel com email da Sensorama (contato@sensoramadesign.com).
+      Importar projeto do GitHub.
+      Configurar variáveis de ambiente do .env.example
+      Deploy automático.
+
+10.3. Domínio (GoDaddy):
+      
+      Acessar painel GoDaddy do domínio sensoramadesign.com.
+      
+      Mudanças no DNS:
+      
+      REMOVER:
+      - CNAME www → sites.figma.net  (era do Figma Make)
+      
+      ADICIONAR (Vercel dará os valores exatos):
+      - CNAME www → cname.vercel-dns.com
+        ou
+      - A @ → 76.76.21.21 (IP da Vercel)
+      
+      MANTER:
+      - Redirect sensoramadesign.com → www.sensoramadesign.com (já configurado)
+      - CNAME sensoai → ghs.googlehosted.com (ferramenta do outro time, NÃO MEXER)
+      - MX records do Google (email)
+      - TXT records (verificações)
+      
+      Aguardar propagação DNS (1-4h, às vezes até 48h)
+
+10.4. Google Search Console:
+      
+      - Validar propriedade do domínio (via DNS é mais robusto)
+      - Submeter sitemap: https://www.sensoramadesign.com/sitemap.xml
+      - Solicitar reindexação das páginas principais
+      - Aguardar reindexação (alguns dias)
+
+============================================================
+PRINCÍPIOS DE QUALIDADE
+============================================================
+
+1. NÃO inventar conteúdo
+   - Textos jurídicos são oficiais (Data Guide)
+   - Cases têm conteúdo aprovado
+   - Traduções já foram revisadas
+
+2. PRESERVAR design e identidade visual
+   - Cores: #2F5BFF (blue), #43E58E (green), #000000 (black)
+   - Fonts: Unbounded (heading), Open Sans (body)
+   - Componentes do Figma Make têm design refinado, preservar
+
+3. MANTER multilíngue
+   - PT é o canônico
+   - EN e ES são traduções completas
+   - Estrutura paralela (mesma rota em /en e /es)
+
+4. SEO É PRIORIDADE
+   - Todo conteúdo de página principal precisa estar no HTML estático
+   - Meta tags via Next.js Metadata API (estáticas)
+   - Schema JSON-LD nas páginas relevantes
+   - Performance e Core Web Vitals importam
+
+5. NÃO MENCIONAR CLIENTES nos cases
+   - Casos são anonimizados ("organização de healthcare", etc.)
+   - Não introduzir nomes de empresas
+
+============================================================
+CHECKLIST FINAL
+============================================================
+
+ANTES DE FAZER DEPLOY:
+
+[ ] LandingPage completa nos 3 idiomas
+[ ] PrivacyPolicyPage completa nos 3 idiomas
+[ ] CookiePolicyPage completa nos 3 idiomas
+[ ] TermsOfUsePage completa nos 3 idiomas
+[ ] ContactModal funcional com EmailJS
+[ ] CookieBanner funcional
+[ ] Heroes SVG dos 3 cases implementados
+[ ] Página customizada do Marketplace Global implementada
+[ ] Todas as imagens em public/images/ com nomes legíveis
+[ ] Todos os imports figma:asset/ substituídos por /images/
+[ ] Build npm run build completa sem erros
+[ ] View Source mostra HTML com conteúdo real (não vazio)
+[ ] Sitemap.xml acessível e correto
+[ ] robots.txt acessível e correto
+[ ] Lighthouse score > 90 em performance, SEO e accessibility
+
+DEPLOY:
+
+[ ] GitHub repo criado e código commitado
+[ ] Vercel conectado e deploy bem-sucedido
+[ ] Variáveis de ambiente configuradas no Vercel
+[ ] Domínio sensoramadesign.com apontado para Vercel
+[ ] DNS propagado (testar com nslookup ou online tools)
+[ ] HTTPS funcionando (Vercel emite certificado automaticamente)
+[ ] Redirect sensoramadesign.com → www funcionando
+[ ] sensoai.sensoramadesign.com NÃO foi afetado
+
+PÓS-DEPLOY:
+
+[ ] Google Search Console: propriedade validada
+[ ] Sitemap submetido no Search Console
+[ ] Reindexação solicitada
+[ ] Analytics recebendo dados
+[ ] ContentSquare recebendo dados
+[ ] Formulário de contato testado e funcionando
+[ ] Cookie banner aparecendo no primeiro acesso
+
+============================================================
+DÚVIDAS COMUNS
+============================================================
+
+Q: Posso mudar o design?
+A: Não nesta migração. O objetivo é resolver SEO mantendo o design atual.
+   Melhorias de design ficam para uma próxima fase.
+
+Q: E se faltar uma imagem?
+A: Use um placeholder visualmente coerente (fundo cinza com texto, ou
+   cor da brand) e marque com comentário // TODO: adicionar imagem.
+
+Q: Posso adicionar páginas novas?
+A: Sim, depois que tudo estiver funcionando. Por agora, focar em
+   espelhar o que existe no Figma Make.
+
+Q: O que fazer com o site antigo no Figma Make?
+A: Depois que o novo estiver no ar e indexado, despublicar o antigo.
+   Manter o projeto Figma Make como histórico.
+
+Q: Precisa migrar o GoDaddy também?
+A: Não. O domínio fica na GoDaddy. Só muda o DNS para apontar para Vercel.
+
+============================================================
+FIM DO PROMPT
+============================================================
