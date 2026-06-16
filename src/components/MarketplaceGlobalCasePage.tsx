@@ -1,5 +1,6 @@
 'use client';
 
+import { type CSSProperties } from 'react';
 import Link from 'next/link';
 import { BRAND_COLORS, FONTS as F, type Lang } from '@/lib/constants';
 import { UI } from '@/lib/cases-data';
@@ -10,6 +11,10 @@ const B = {
   ...BRAND_COLORS,
   paleBlue: '#E8ECFF',
 };
+
+// Container padrão — alinhado ao restante do site (LandingPage / footer usam 1152 + 32px)
+const CONTAINER: CSSProperties = { maxWidth: 1152, margin: '0 auto', padding: '0 32px' };
+const READABLE = 820; // largura máxima de blocos de texto corrido, para leitura confortável
 
 export const MARKETPLACE_GLOBAL_SLUG = 'marketplace-b2b-expansao-internacional';
 
@@ -25,23 +30,23 @@ const T = {
     heroStripTitle: 'Pesquisa de campo global',
     heroStripStats: '13 países · 5 continentes · 60+ estabelecimentos',
     valueLead:
-      'Dashboards mostram o que acontece. A pesquisa de campo mostra por quê. A Sensorama vai até o ponto de venda real, no mundo todo, e devolve para a empresa as decisões que fazem o negócio crescer: para onde expandir, o que construir e onde estão as oportunidades.',
+      'Dashboards mostram o que acontece. A pesquisa de campo mostra por quê. Conduzimos pesquisa etnográfica presencial em 13 países e 5 continentes para uma multinacional de bens de consumo, mapeando como o pequeno e médio varejo opera, decide e compra em mercados com dinâmicas culturais, econômicas e operacionais distintas.',
     stats: [
       { n: '13', label: 'PAÍSES', desc: 'pesquisados' },
       { n: '5', label: 'CONTINENTES', desc: 'alcançados' },
       { n: '60+', label: 'ESTABELECIMENTOS', desc: 'ouvidos em campo' },
-      { n: '50+', label: 'OPORTUNIDADES', desc: 'de negócio entregues' },
+      { n: '39', label: 'OPORTUNIDADES', desc: 'de negócio identificadas' },
     ],
     deliverHeading: 'O que entregamos',
     cards: [
-      { title: 'Decisões de expansão com segurança', body: 'Reduza o risco de entrar em novos mercados. O roadmap passa a se apoiar em evidência real de comportamento, não em suposição.' },
+      { title: 'Decisões de expansão com segurança', body: 'Reduz o risco de entrar em novos mercados: o roadmap passa a se apoiar em evidência real de comportamento, não em suposição.' },
       { title: 'Oportunidades de negócio priorizadas', body: 'Entregamos oportunidades concretas de produto e receita, já ranqueadas por impacto e viabilidade, prontas para decisão.' },
-      { title: 'Produto que o mercado adota', body: 'Quando entendemos como o varejo realmente compra e opera, o produto adere ao comportamento e a adoção cresce.' },
-      { title: 'Visão comparativa entre mercados', body: 'Saiba onde investir primeiro e como adaptar a oferta a cada país, cultura e nível de maturidade do mercado.' },
-      { title: 'Alcance que poucos têm', body: 'Chegamos ao seu usuário onde ele estiver: capitais, periferias, comércio informal ou mercados maduros.' },
+      { title: 'Produto que o mercado adota', body: 'As decisões de produto passam a se basear em como o varejo realmente faz pedidos, controla estoque e se relaciona com fornecedores, reduzindo o esforço investido no que não seria usado.' },
+      { title: 'Visão comparativa entre mercados', body: 'Mostra onde investir primeiro e como adaptar a oferta a cada país, cultura e nível de maturidade do mercado.' },
+      { title: 'Capacidade de pesquisa presencial em mercados maduros, emergentes e fronteiriços', body: 'A pesquisa chega a capitais, periferias, comércio informal e mercados maduros, no contexto real de cada operação.' },
     ] as Card[],
     audienceHeading: 'Conversamos com quem move o varejo',
-    audienceLead: 'Não falamos com planilhas. Sentamos com as pessoas que decidem o que entra e o que sai da prateleira, no contexto real de cada mercado.',
+    audienceLead: 'Conversamos diretamente com as pessoas que decidem o que entra e o que sai da prateleira em cada mercado.',
     audienceProfiles: ['Donos de mercado', 'Gerentes de loja', 'Atacadistas', 'Representantes de vendas'],
     learningsHeading: 'O que aprendemos em campo',
     learningsLead: 'Pesquisar o mundo todo revela padrões que se repetem onde quer que o varejo de bens de consumo opere. Quatro aprendizados que mudaram decisões:',
@@ -51,7 +56,7 @@ const T = {
       { title: 'A relação humana faz parte da compra.', body: 'Atacadistas e representantes de vendas seguem influenciando a decisão. A oportunidade não está em substituir essa relação, e sim em integrá-la ao digital.' },
       { title: 'As dores se concentram em etapas específicas.', body: 'Olhando a jornada de planejamento, pedido e entrega, fica claro que as fricções não se distribuem por igual. Isso permite priorizar oportunidades por impacto real.' },
     ] as Card[],
-    reachHeading: 'Onde o seu cliente estiver, a gente chega',
+    reachHeading: 'Pesquisa presencial em qualquer mercado',
     reachLead: 'Não importa o país, a cultura ou o nível de maturidade do mercado. Conduzimos pesquisa presencial onde o comportamento acontece.',
     mapCaption: 'Países onde a Sensorama conduziu pesquisa presencial',
     impactLead: 'Cada pesquisa devolve para a empresa o que mais importa: clareza para decidir e oportunidades para crescer, ancoradas no comportamento real do mercado.',
@@ -68,23 +73,23 @@ const T = {
     heroStripTitle: 'Global field research',
     heroStripStats: '13 countries · 5 continents · 60+ establishments',
     valueLead:
-      'Dashboards show what happens. Field research shows why. Sensorama goes to the real point of sale, anywhere in the world, and hands back to the business the decisions that make it grow: where to expand, what to build and where the opportunities are.',
+      'Dashboards show what happens. Field research shows why. We conducted in-person ethnographic research across 13 countries and 5 continents for a global consumer goods company, mapping how small and mid-sized retail operates, decides and buys in markets with distinct cultural, economic and operational dynamics.',
     stats: [
       { n: '13', label: 'COUNTRIES', desc: 'researched' },
       { n: '5', label: 'CONTINENTS', desc: 'reached' },
       { n: '60+', label: 'ESTABLISHMENTS', desc: 'heard in the field' },
-      { n: '50+', label: 'OPPORTUNITIES', desc: 'delivered to the business' },
+      { n: '39', label: 'OPPORTUNITIES', desc: 'identified for the business' },
     ],
     deliverHeading: 'What we deliver',
     cards: [
-      { title: 'Expansion decisions with confidence', body: 'Reduce the risk of entering new markets. The roadmap rests on real behavioral evidence, not on assumption.' },
+      { title: 'Expansion decisions with confidence', body: 'Reduces the risk of entering new markets: the roadmap rests on real behavioral evidence, not on assumption.' },
       { title: 'Prioritized business opportunities', body: 'We deliver concrete product and revenue opportunities, already ranked by impact and feasibility, ready for decision.' },
-      { title: 'Product the market actually adopts', body: 'When we understand how retail truly buys and operates, the product fits behavior and adoption grows.' },
-      { title: 'A comparative view across markets', body: 'Know where to invest first and how to adapt the offer to each country, culture and level of market maturity.' },
-      { title: 'Reach few others have', body: 'We get to your user wherever they are: capitals, peripheries, informal trade or mature markets.' },
+      { title: 'Product the market actually adopts', body: 'Product decisions rest on how retail actually places orders, manages stock and deals with suppliers, reducing effort spent on what would not be used.' },
+      { title: 'A comparative view across markets', body: 'Shows where to invest first and how to adapt the offer to each country, culture and level of market maturity.' },
+      { title: 'In-person research capability in mature, emerging and frontier markets', body: 'Research reaches capitals, peripheries, informal trade and mature markets, in the real context of each operation.' },
     ] as Card[],
     audienceHeading: 'We talk to the people who move retail',
-    audienceLead: 'We do not talk to spreadsheets. We sit down with the people who decide what goes on and off the shelf, in the real context of each market.',
+    audienceLead: 'We talk directly with the people who decide what goes on and off the shelf in each market.',
     audienceProfiles: ['Store owners', 'Store managers', 'Wholesalers', 'Sales reps'],
     learningsHeading: 'What we learned in the field',
     learningsLead: 'Researching the whole world reveals patterns that repeat wherever consumer goods retail operates. Four learnings that changed decisions:',
@@ -94,7 +99,7 @@ const T = {
       { title: 'Human relationships are part of the purchase.', body: 'Wholesalers and sales reps still influence the decision. The opportunity is not to replace that relationship, but to integrate it into the digital.' },
       { title: 'Pain points concentrate in specific stages.', body: 'Looking at the planning, ordering and delivery journey, it becomes clear that friction is not evenly distributed. That allows prioritizing opportunities by real impact.' },
     ] as Card[],
-    reachHeading: 'Wherever your customer is, we get there',
+    reachHeading: 'In-person research in any market',
     reachLead: 'No matter the country, the culture or the level of market maturity. We conduct in-person research where behavior actually happens.',
     mapCaption: 'Countries where Sensorama has conducted in-person research',
     impactLead: 'Every study returns to the business what matters most: clarity to decide and opportunities to grow, anchored in real market behavior.',
@@ -111,23 +116,23 @@ const T = {
     heroStripTitle: 'Investigación de campo global',
     heroStripStats: '13 países · 5 continentes · 60+ establecimientos',
     valueLead:
-      'Los dashboards muestran qué ocurre. La investigación de campo muestra por qué. Sensorama va hasta el punto de venta real, en todo el mundo, y devuelve al negocio las decisiones que lo hacen crecer: hacia dónde expandirse, qué construir y dónde están las oportunidades.',
+      'Los dashboards muestran qué ocurre. La investigación de campo muestra por qué. Condujimos investigación etnográfica presencial en 13 países y 5 continentes para una multinacional de bienes de consumo, mapeando cómo el pequeño y mediano retail opera, decide y compra en mercados con dinámicas culturales, económicas y operacionales distintas.',
     stats: [
       { n: '13', label: 'PAÍSES', desc: 'investigados' },
       { n: '5', label: 'CONTINENTES', desc: 'alcanzados' },
       { n: '60+', label: 'ESTABLECIMIENTOS', desc: 'escuchados en campo' },
-      { n: '50+', label: 'OPORTUNIDADES', desc: 'de negocio entregadas' },
+      { n: '39', label: 'OPORTUNIDADES', desc: 'de negocio identificadas' },
     ],
     deliverHeading: 'Lo que entregamos',
     cards: [
-      { title: 'Decisiones de expansión con seguridad', body: 'Reduzca el riesgo de entrar en nuevos mercados. El roadmap se apoya en evidencia real de comportamiento, no en suposición.' },
+      { title: 'Decisiones de expansión con seguridad', body: 'Reduce el riesgo de entrar en nuevos mercados: el roadmap se apoya en evidencia real de comportamiento, no en suposición.' },
       { title: 'Oportunidades de negocio priorizadas', body: 'Entregamos oportunidades concretas de producto e ingresos, ya rankeadas por impacto y viabilidad, listas para decisión.' },
-      { title: 'Producto que el mercado adopta', body: 'Cuando entendemos cómo el retail realmente compra y opera, el producto se ajusta al comportamiento y la adopción crece.' },
-      { title: 'Visión comparativa entre mercados', body: 'Sepa dónde invertir primero y cómo adaptar la oferta a cada país, cultura y nivel de madurez del mercado.' },
-      { title: 'Alcance que pocos tienen', body: 'Llegamos a su usuario donde sea que esté: capitales, periferias, comercio informal o mercados maduros.' },
+      { title: 'Producto que el mercado adopta', body: 'Las decisiones de producto se basan en cómo el retail realmente hace pedidos, controla inventario y se relaciona con proveedores, reduciendo el esfuerzo invertido en lo que no se usaría.' },
+      { title: 'Visión comparativa entre mercados', body: 'Muestra dónde invertir primero y cómo adaptar la oferta a cada país, cultura y nivel de madurez del mercado.' },
+      { title: 'Capacidad de investigación presencial en mercados maduros, emergentes y fronterizos', body: 'La investigación llega a capitales, periferias, comercio informal y mercados maduros, en el contexto real de cada operación.' },
     ] as Card[],
     audienceHeading: 'Hablamos con quienes mueven el retail',
-    audienceLead: 'No hablamos con planillas. Nos sentamos con las personas que deciden qué entra y qué sale del estante, en el contexto real de cada mercado.',
+    audienceLead: 'Conversamos directamente con las personas que deciden qué entra y qué sale del estante en cada mercado.',
     audienceProfiles: ['Dueños de tienda', 'Gerentes de tienda', 'Mayoristas', 'Representantes de ventas'],
     learningsHeading: 'Lo que aprendimos en campo',
     learningsLead: 'Investigar al mundo entero revela patrones que se repiten donde sea que opere el retail de bienes de consumo. Cuatro aprendizajes que cambiaron decisiones:',
@@ -137,7 +142,7 @@ const T = {
       { title: 'La relación humana es parte de la compra.', body: 'Mayoristas y representantes de ventas siguen influyendo en la decisión. La oportunidad no está en sustituir esa relación, sino en integrarla a lo digital.' },
       { title: 'Las fricciones se concentran en etapas específicas.', body: 'Mirando el viaje de planificación, pedido y entrega, queda claro que las fricciones no se distribuyen por igual. Eso permite priorizar oportunidades por impacto real.' },
     ] as Card[],
-    reachHeading: 'Donde esté su cliente, llegamos',
+    reachHeading: 'Investigación presencial en cualquier mercado',
     reachLead: 'No importa el país, la cultura o el nivel de madurez del mercado. Conducimos investigación presencial donde el comportamiento ocurre.',
     mapCaption: 'Países donde Sensorama condujo investigación presencial',
     impactLead: 'Cada investigación devuelve al negocio lo que más importa: claridad para decidir y oportunidades para crecer, ancladas en el comportamiento real del mercado.',
@@ -205,45 +210,37 @@ function WorldMap({ caption }: { caption: string }) {
   );
 }
 
-/* ─── Hero (same look as listing thumbnail, scaled up + i18n strip) ─── */
-
+/* ─── Hero ──────────────────────────────────────────────────────
+   Imagem de fundo (mapa-múndi com os mercados pesquisados) + faixa de
+   texto sobreposta. Para trocar a imagem, basta substituir o arquivo
+   em /images/cases/marketplace-hero.png.
+─────────────────────────────────────────────────────────────── */
 function Hero({ stripTitle, stripStats }: { stripTitle: string; stripStats: string }) {
-  const markets = [
-    { code: '13', color: B.green },
-    { code: '5', color: B.blue },
-    { code: '60+', color: '#FFB84D' },
-  ];
   return (
-    <div style={{ width: '100%', height: '100%', backgroundColor: '#0A0F2C', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-      <svg viewBox="0 0 800 450" width="100%" height="100%" role="img" aria-label={stripTitle}>
-        <defs>
-          <linearGradient id="mgHero" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#2F5BFF" />
-            <stop offset="100%" stopColor="#43E58E" />
-          </linearGradient>
-        </defs>
-        <text x="60" y="80" fontFamily="'Unbounded', sans-serif" fontSize="26" fontWeight="700" fill="#FFFFFF">{stripTitle}</text>
-        <text x="60" y="108" fontFamily="'Open Sans', sans-serif" fontSize="15" fill="rgba(255,255,255,0.65)">{stripStats}</text>
-        <line x1="120" y1="250" x2="680" y2="250" stroke="url(#mgHero)" strokeWidth="2" strokeDasharray="6 6" opacity="0.5" />
-        {markets.map((m, i) => (
-          <g key={m.code} transform={`translate(${90 + i * 270}, 180)`}>
-            <circle cx="60" cy="70" r="48" fill="rgba(255,255,255,0.06)" stroke={m.color} strokeWidth="1.8" />
-            <text x="60" y="78" textAnchor="middle" fontFamily="'Unbounded', sans-serif" fontSize="22" fontWeight="700" fill="#FFFFFF">{m.code}</text>
-          </g>
-        ))}
-        <g transform="translate(60, 360)">
-          {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-            <g key={i} transform={`translate(${i * 92}, 0)`}>
-              <rect x="0" y="10" width="62" height="44" rx="3" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
-              <rect x="0" y="10" width="62" height="9" fill="rgba(47,91,255,0.35)" />
-              <rect x="26" y="32" width="10" height="22" fill="rgba(67,229,142,0.3)" stroke="#43E58E" strokeWidth="0.8" />
-              <rect x="6" y="22" width="12" height="8" fill="rgba(255,255,255,0.1)" />
-              <rect x="22" y="22" width="12" height="8" fill="rgba(255,255,255,0.1)" />
-              <rect x="44" y="22" width="12" height="8" fill="rgba(255,255,255,0.1)" />
-            </g>
-          ))}
-        </g>
-      </svg>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#0A0F2C',
+        backgroundImage:
+          'linear-gradient(rgba(10,15,44,0.5), rgba(10,15,44,0.5)), url(/images/cases/marketplace-hero.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        padding: 32,
+        gap: 14,
+      }}
+    >
+      <p style={{ fontFamily: F.body, fontSize: 12, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', margin: 0 }}>
+        {stripTitle}
+      </p>
+      <p style={{ fontFamily: F.heading, fontWeight: 700, fontSize: 'clamp(1.1rem, 3.2vw, 1.9rem)', color: '#FFFFFF', margin: 0, lineHeight: 1.3 }}>
+        {stripStats}
+      </p>
     </div>
   );
 }
@@ -260,7 +257,7 @@ export function MarketplaceGlobalCasePage({ lang }: { lang: Lang }) {
     <SiteLayout lang={lang}>
     <main style={{ backgroundColor: B.white, minHeight: '100vh', fontFamily: F.body, color: B.darkGray }}>
       {/* HERO */}
-      <section style={{ padding: '48px 32px 16px', maxWidth: 800, margin: '0 auto' }}>
+      <section style={{ ...CONTAINER, padding: '48px 32px 16px' }}>
         <nav aria-label="breadcrumb" style={{ fontFamily: F.body, fontSize: 13, color: B.medGray, marginBottom: 24 }}>
           <Link href={langPrefix || '/'} style={{ color: B.blue, textDecoration: 'none' }}>{ui.breadcrumbHome}</Link>
           <span style={{ margin: '0 8px' }}>›</span>
@@ -276,7 +273,7 @@ export function MarketplaceGlobalCasePage({ lang }: { lang: Lang }) {
           <h1 style={{ fontFamily: F.heading, fontWeight: 700, fontSize: 'clamp(1.8rem, 4vw, 2.75rem)', color: B.black, margin: 0, marginBottom: 12, lineHeight: 1.2 }}>
             {t.title}
           </h1>
-          <p style={{ fontFamily: F.body, fontSize: '1.05rem', color: B.medGray, margin: 0, marginBottom: 16, lineHeight: 1.6 }}>
+          <p style={{ fontFamily: F.body, fontSize: '1.05rem', color: B.medGray, margin: 0, marginBottom: 16, lineHeight: 1.6, maxWidth: READABLE }}>
             {t.subtitle}
           </p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -289,16 +286,16 @@ export function MarketplaceGlobalCasePage({ lang }: { lang: Lang }) {
         </header>
       </section>
 
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 64px' }}>
+      <section style={{ ...CONTAINER, padding: '0 32px 64px' }}>
         <div style={{ aspectRatio: '16/9', width: '100%', borderRadius: 12, overflow: 'hidden', backgroundColor: B.lightGray }}>
           <Hero stripTitle={t.heroStripTitle} stripStats={t.heroStripStats} />
         </div>
       </section>
 
       {/* VALUE PROPOSITION + NUMBERS */}
-      <section style={{ backgroundColor: B.lightGray, padding: '72px 32px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <p style={{ fontFamily: F.body, fontSize: 'clamp(1.15rem, 2vw, 1.4rem)', lineHeight: 1.55, color: B.black, margin: 0, marginBottom: 48, maxWidth: 820 }}>
+      <section style={{ backgroundColor: B.lightGray, padding: '72px 0' }}>
+        <div style={CONTAINER}>
+          <p style={{ fontFamily: F.body, fontSize: 'clamp(1.15rem, 2vw, 1.4rem)', lineHeight: 1.55, color: B.black, margin: 0, marginBottom: 48, maxWidth: READABLE }}>
             {t.valueLead}
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
@@ -320,8 +317,8 @@ export function MarketplaceGlobalCasePage({ lang }: { lang: Lang }) {
       </section>
 
       {/* WHAT WE DELIVER */}
-      <section style={{ padding: '88px 32px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <section style={{ padding: '88px 0' }}>
+        <div style={CONTAINER}>
           <h2 style={{ fontFamily: F.heading, fontWeight: 700, fontSize: 'clamp(1.6rem, 3vw, 2.25rem)', color: B.black, margin: 0, marginBottom: 40, maxWidth: 720 }}>
             {t.deliverHeading}
           </h2>
@@ -344,8 +341,8 @@ export function MarketplaceGlobalCasePage({ lang }: { lang: Lang }) {
       </section>
 
       {/* WHO WE TALKED TO */}
-      <section style={{ backgroundColor: B.lightGray, padding: '72px 32px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+      <section style={{ backgroundColor: B.lightGray, padding: '72px 0' }}>
+        <div style={CONTAINER}>
           <h2 style={{ fontFamily: F.heading, fontWeight: 700, fontSize: 'clamp(1.5rem, 2.8vw, 2.1rem)', color: B.black, margin: 0, marginBottom: 16, maxWidth: 720 }}>
             {t.audienceHeading}
           </h2>
@@ -364,8 +361,8 @@ export function MarketplaceGlobalCasePage({ lang }: { lang: Lang }) {
       </section>
 
       {/* FIELD LEARNINGS */}
-      <section style={{ padding: '88px 32px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <section style={{ padding: '88px 0' }}>
+        <div style={CONTAINER}>
           <h2 style={{ fontFamily: F.heading, fontWeight: 700, fontSize: 'clamp(1.6rem, 3vw, 2.25rem)', color: B.black, margin: 0, marginBottom: 16, maxWidth: 720 }}>
             {t.learningsHeading}
           </h2>
@@ -388,17 +385,19 @@ export function MarketplaceGlobalCasePage({ lang }: { lang: Lang }) {
       </section>
 
       {/* GLOBAL REACH MAP */}
-      <section style={{ backgroundColor: B.black, padding: '88px 32px', color: B.white }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', marginBottom: 40 }}>
-          <h2 style={{ fontFamily: F.heading, fontWeight: 700, fontSize: 'clamp(1.6rem, 3vw, 2.25rem)', color: B.white, margin: 0, marginBottom: 16, maxWidth: 720 }}>
-            {t.reachHeading}
-          </h2>
-          <p style={{ fontFamily: F.body, fontSize: '1.05rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.65, margin: 0, maxWidth: 720 }}>
-            {t.reachLead}
-          </p>
-        </div>
-        <div style={{ maxWidth: 1400, margin: '0 auto', backgroundColor: B.white, borderRadius: 16, padding: '32px 24px' }}>
-          <WorldMap caption={t.mapCaption} />
+      <section style={{ backgroundColor: B.black, padding: '88px 0', color: B.white }}>
+        <div style={CONTAINER}>
+          <div style={{ marginBottom: 40 }}>
+            <h2 style={{ fontFamily: F.heading, fontWeight: 700, fontSize: 'clamp(1.6rem, 3vw, 2.25rem)', color: B.white, margin: 0, marginBottom: 16, maxWidth: READABLE }}>
+              {t.reachHeading}
+            </h2>
+            <p style={{ fontFamily: F.body, fontSize: '1.05rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.65, margin: 0, maxWidth: READABLE }}>
+              {t.reachLead}
+            </p>
+          </div>
+          <div style={{ backgroundColor: B.white, borderRadius: 16, padding: '32px 24px' }}>
+            <WorldMap caption={t.mapCaption} />
+          </div>
         </div>
       </section>
 
@@ -420,7 +419,7 @@ export function MarketplaceGlobalCasePage({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <nav style={{ maxWidth: 800, margin: '0 auto', padding: '0 32px 64px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+      <nav style={{ ...CONTAINER, padding: '0 32px 64px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
         <Link href={`${langPrefix}/cases`} style={{ fontFamily: F.body, fontSize: 14, fontWeight: 600, color: B.blue, textDecoration: 'none', padding: '12px 20px', border: `1.5px solid ${B.blue}`, borderRadius: 10 }}>
           {ui.backToCases}
         </Link>

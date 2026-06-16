@@ -155,11 +155,11 @@ export const T = {
           visual: "contactCenter",
         },
         {
-          label: "Consumer Goods",
-          title: "Strategic B2B Marketplace Expansion in Emerging Markets",
+          label: "Consumer Goods (FMCG)",
+          title: "Global Field Research for a B2B Marketplace",
           context: "A global consumer goods company sought to expand its digital B2B marketplace into new international territories with distinct cultural, economic and operational characteristics.",
-          whatWeDid: "Ran deep ethnographic research across South Africa, South Korea and Turkey. Visited 30+ small retailers, corner shops, spaza shops and wholesalers. Mapped purchase behaviors, intermediary roles and digitalization barriers per market.",
-          results: [{ highlight: "39 optimization opportunities", text: "identified across 3 emerging markets" }, { text: "30+ establishments visited and documented" }, { text: "Replicable expansion framework for future markets" }],
+          whatWeDid: "Conducted in-person ethnographic research across 13 countries and 5 continents. Visited 60+ establishments: small retailers, corner shops, wholesalers and neighborhood points of sale. Mapped purchase behaviors, intermediary roles and digitalization barriers in each market.",
+          results: [{ highlight: "39 optimization opportunities", text: "identified across 13 countries and 5 continents" }, { text: "60+ establishments visited and documented" }, { text: "Replicable expansion framework for future markets" }],
           visual: "marketplaceExpansion",
         },
       ],
@@ -284,11 +284,11 @@ export const T = {
           visual: "contactCenter",
         },
         {
-          label: "Bens de Consumo",
-          title: "Expansão Estratégica de Marketplace B2B em Mercados Emergentes",
+          label: "Bens de Consumo (FMCG)",
+          title: "Pesquisa de Campo Global para Marketplace B2B",
           context: "Uma empresa global de consumer goods buscava expandir seu marketplace B2B digital para novos territórios internacionais com características culturais, econômicas e operacionais distintas.",
-          whatWeDid: "Conduzimos pesquisa etnográfica profunda em África do Sul, Coreia do Sul e Turquia. Visitamos 30+ pequenos mercados, corner shops, spaza shops e atacadistas. Mapeamos comportamentos de compra, papel de intermediários e barreiras à digitalização por mercado.",
-          results: [{ highlight: "39 oportunidades de otimização", text: "identificadas em 3 mercados emergentes" }, { text: "30+ estabelecimentos visitados e documentados" }, { text: "Framework de expansão replicável para futuros mercados" }],
+          whatWeDid: "Conduzimos pesquisa etnográfica presencial em 13 países e 5 continentes. Visitamos 60+ estabelecimentos: pequenos mercados, corner shops, atacadistas e pontos de venda de bairro. Mapeamos comportamentos de compra, papel de intermediários e barreiras à digitalização em cada mercado.",
+          results: [{ highlight: "39 oportunidades de otimização", text: "identificadas em 13 países e 5 continentes" }, { text: "60+ estabelecimentos visitados e documentados" }, { text: "Framework de expansão replicável para futuros mercados" }],
           visual: "marketplaceExpansion",
         },
       ],
@@ -413,11 +413,11 @@ export const T = {
           visual: "contactCenter",
         },
         {
-          label: "Bienes de Consumo",
-          title: "Expansión Estratégica de Marketplace B2B en Mercados Emergentes",
+          label: "Bienes de Consumo (FMCG)",
+          title: "Investigación de Campo Global para Marketplace B2B",
           context: "Una empresa global de consumer goods buscaba expandir su marketplace B2B digital a nuevos territorios internacionales con características culturales, económicas y operacionales distintas.",
-          whatWeDid: "Realizamos investigación etnográfica profunda en Sudáfrica, Corea del Sur y Turquía. Visitamos 30+ pequeños comercios, corner shops, spaza shops y mayoristas. Mapeamos comportamientos de compra, rol de intermediarios y barreras a la digitalización por mercado.",
-          results: [{ highlight: "39 oportunidades de optimización", text: "identificadas en 3 mercados emergentes" }, { text: "30+ establecimientos visitados y documentados" }, { text: "Framework de expansión replicable para futuros mercados" }],
+          whatWeDid: "Realizamos investigación etnográfica presencial en 13 países y 5 continentes. Visitamos 60+ establecimientos: pequeños comercios, corner shops, mayoristas y puntos de venta de barrio. Mapeamos comportamientos de compra, rol de intermediarios y barreras a la digitalización en cada mercado.",
+          results: [{ highlight: "39 oportunidades de optimización", text: "identificadas en 13 países y 5 continentes" }, { text: "60+ establecimientos visitados y documentados" }, { text: "Framework de expansión replicable para futuros mercados" }],
           visual: "marketplaceExpansion",
         },
       ],
@@ -644,38 +644,31 @@ function CaseVisualBranchResearch() {
 }
 
 function CaseVisualMarketplaceExpansion() {
-  const markets = [
-    { code: "ZA", x: 50, color: "#43E58E" },
-    { code: "KR", x: 170, color: "#2F5BFF" },
-    { code: "TR", x: 290, color: "#FFB84D" },
-  ];
+  // 13 barras com alturas variadas, representando os múltiplos mercados pesquisados.
+  // TODO: substituir por imagem real em /images/cases/ quando disponível.
+  const heights = [34, 52, 28, 60, 44, 38, 56, 30, 48, 64, 36, 50, 42];
+  const barW = 18;
+  const gap = 10;
+  const baseY = 200;
+  const startX = 20;
   return (
     <div style={{ width: "100%", borderRadius: 12, overflow: "hidden", aspectRatio: "16/10", backgroundColor: "#0A0F2C", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-      <svg viewBox="0 0 400 250" width="100%" height="100%" role="img" aria-label="International B2B marketplace expansion illustration" style={{ maxWidth: "100%", maxHeight: "100%" }}>
-        <defs>
-          <linearGradient id="mpCardLine" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#2F5BFF" />
-            <stop offset="100%" stopColor="#43E58E" />
-          </linearGradient>
-        </defs>
-        <text x="20" y="40" fontFamily="'Unbounded', sans-serif" fontSize="14" fontWeight="700" fill="#FFFFFF">B2B Marketplace Expansion</text>
-        <text x="20" y="58" fontFamily="'Open Sans', sans-serif" fontSize="11" fill="rgba(255,255,255,0.6)">3 markets · 30+ establishments · 39 opportunities</text>
-        <line x1="80" y1="135" x2="350" y2="135" stroke="url(#mpCardLine)" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.5" />
-        {markets.map((m) => (
-          <g key={m.code} transform={`translate(${m.x}, 100)`}>
-            <circle cx="35" cy="35" r="28" fill="rgba(255,255,255,0.06)" stroke={m.color} strokeWidth="1.4" />
-            <text x="35" y="40" textAnchor="middle" fontFamily="'Unbounded', sans-serif" fontSize="14" fontWeight="700" fill="#FFFFFF">{m.code}</text>
-          </g>
+      <svg viewBox="0 0 400 250" width="100%" height="100%" role="img" aria-label="Global field research across 13 countries illustration" style={{ maxWidth: "100%", maxHeight: "100%" }}>
+        <text x="20" y="40" fontFamily="'Unbounded', sans-serif" fontSize="14" fontWeight="700" fill="#FFFFFF">Global Field Research</text>
+        <text x="20" y="58" fontFamily="'Open Sans', sans-serif" fontSize="11" fill="rgba(255,255,255,0.6)">13 countries · 5 continents · 60+ establishments</text>
+        {heights.map((h, i) => (
+          <rect
+            key={i}
+            x={startX + i * (barW + gap)}
+            y={baseY - h}
+            width={barW}
+            height={h}
+            rx="2"
+            fill={i % 3 === 0 ? "#43E58E" : "#2F5BFF"}
+            opacity="0.85"
+          />
         ))}
-        <g transform="translate(20, 200)">
-          {[0,1,2,3,4,5,6].map((i) => (
-            <g key={i} transform={`translate(${i * 52}, 0)`}>
-              <rect x="0" y="0" width="36" height="26" rx="2" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" />
-              <rect x="0" y="0" width="36" height="6" fill="rgba(47,91,255,0.35)" />
-              <rect x="14" y="14" width="8" height="12" fill="rgba(67,229,142,0.3)" stroke="#43E58E" strokeWidth="0.6" />
-            </g>
-          ))}
-        </g>
+        <line x1="16" y1={baseY + 2} x2="384" y2={baseY + 2} stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
       </svg>
     </div>
   );

@@ -136,7 +136,7 @@ function MarketplaceExpansionHero() {
           </linearGradient>
         </defs>
         <text x="60" y="80" fontFamily="'Unbounded', sans-serif" fontSize="26" fontWeight="700" fill="#FFFFFF">International B2B Marketplace Expansion</text>
-        <text x="60" y="108" fontFamily="'Open Sans', sans-serif" fontSize="15" fill="rgba(255,255,255,0.65)">3 emerging markets · 30+ establishments · 39 opportunities</text>
+        <text x="60" y="108" fontFamily="'Open Sans', sans-serif" fontSize="15" fill="rgba(255,255,255,0.65)">13 countries · 5 continents · 60+ establishments</text>
 
         {/* Connecting line */}
         <line x1="120" y1="250" x2="680" y2="250" stroke="url(#mpHeroLine)" strokeWidth="2" strokeDasharray="6 6" opacity="0.5" />
