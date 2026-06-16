@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { BRAND_COLORS, FONTS as F, type Lang } from '@/lib/constants';
 import { UI } from '@/lib/cases-data';
 import { SiteLayout } from '@/components/SiteLayout';
+import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
 
 const B = {
   ...BRAND_COLORS,
@@ -31,7 +32,7 @@ const T = {
       { n: '60+', label: 'ESTABELECIMENTOS', desc: 'ouvidos em campo' },
       { n: '50+', label: 'OPORTUNIDADES', desc: 'de negócio entregues' },
     ],
-    deliverHeading: 'O que entregamos para o seu negócio',
+    deliverHeading: 'O que entregamos',
     cards: [
       { title: 'Decisões de expansão com segurança', body: 'Reduza o risco de entrar em novos mercados. O roadmap passa a se apoiar em evidência real de comportamento, não em suposição.' },
       { title: 'Oportunidades de negócio priorizadas', body: 'Entregamos oportunidades concretas de produto e receita, já ranqueadas por impacto e viabilidade, prontas para decisão.' },
@@ -74,7 +75,7 @@ const T = {
       { n: '60+', label: 'ESTABLISHMENTS', desc: 'heard in the field' },
       { n: '50+', label: 'OPPORTUNITIES', desc: 'delivered to the business' },
     ],
-    deliverHeading: 'What we deliver to your business',
+    deliverHeading: 'What we deliver',
     cards: [
       { title: 'Expansion decisions with confidence', body: 'Reduce the risk of entering new markets. The roadmap rests on real behavioral evidence, not on assumption.' },
       { title: 'Prioritized business opportunities', body: 'We deliver concrete product and revenue opportunities, already ranked by impact and feasibility, ready for decision.' },
@@ -117,7 +118,7 @@ const T = {
       { n: '60+', label: 'ESTABLECIMIENTOS', desc: 'escuchados en campo' },
       { n: '50+', label: 'OPORTUNIDADES', desc: 'de negocio entregadas' },
     ],
-    deliverHeading: 'Lo que entregamos a su negocio',
+    deliverHeading: 'Lo que entregamos',
     cards: [
       { title: 'Decisiones de expansión con seguridad', body: 'Reduzca el riesgo de entrar en nuevos mercados. El roadmap se apoya en evidencia real de comportamiento, no en suposición.' },
       { title: 'Oportunidades de negocio priorizadas', body: 'Entregamos oportunidades concretas de producto e ingresos, ya rankeadas por impacto y viabilidad, listas para decisión.' },
@@ -148,72 +149,55 @@ const T = {
 
 /* ─── World map with 13 highlighted countries ────────────────── */
 
-const COUNTRIES: { code: string; lat: number; lon: number }[] = [
-  { code: 'BR', lat: -10, lon: -55 },
-  { code: 'PE', lat: -10, lon: -76 },
-  { code: 'CO', lat: 4, lon: -74 },
-  { code: 'US', lat: 39, lon: -98 },
-  { code: 'DO', lat: 19, lon: -70 },
-  { code: 'ZA', lat: -29, lon: 24 },
-  { code: 'BW', lat: -22, lon: 24 },
-  { code: 'TR', lat: 39, lon: 35 },
-  { code: 'KR', lat: 37, lon: 128 },
-  { code: 'SG', lat: 1, lon: 104 },
-  { code: 'MY', lat: 4, lon: 102 },
-  { code: 'VN', lat: 16, lon: 108 },
-  { code: 'PH', lat: 13, lon: 122 },
-];
+// Real geographic world map (Natural Earth 1:110m via world-atlas topojson)
+const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 
-const MAP_W = 1000;
-const MAP_H = 500;
-const project = (lat: number, lon: number) => ({
-  x: ((lon + 180) / 360) * MAP_W,
-  y: ((90 - lat) / 180) * MAP_H,
-});
+// ISO 3166-1 numeric codes of the 13 researched markets
+// BR PE CO US DO ZA BW TR KR SG MY VN PH
+const HIGHLIGHT = new Set([76, 604, 170, 840, 214, 710, 72, 792, 410, 702, 458, 704, 608]);
 
-// Simplified continent silhouettes (low-fidelity, recognizable)
-const CONTINENT_PATHS = [
-  // North America
-  'M 130 110 Q 180 80 240 100 L 290 140 L 310 200 L 280 250 L 220 270 L 170 240 L 140 180 Z',
-  // Central America / Caribbean
-  'M 220 270 L 270 285 L 290 305 L 270 320 L 240 310 Z',
-  // South America
-  'M 270 320 L 320 320 L 340 360 L 335 420 L 305 460 L 285 440 L 275 390 Z',
-  // Europe
-  'M 470 140 Q 500 125 540 130 L 555 155 L 540 180 L 500 185 L 475 170 Z',
-  // Africa
-  'M 480 200 Q 520 200 555 215 L 575 270 L 565 330 L 535 370 L 505 360 L 485 310 L 475 250 Z',
-  // Middle East / West Asia (bridge)
-  'M 555 165 L 595 175 L 615 200 L 595 220 L 560 215 Z',
-  // Asia (main)
-  'M 595 130 Q 670 110 760 130 L 820 165 L 830 215 L 800 245 L 740 250 L 680 230 L 620 210 L 600 175 Z',
-  // SE Asia / Indonesia
-  'M 760 280 L 820 285 L 845 305 L 825 325 L 780 320 L 755 305 Z',
-  // Australia
-  'M 800 370 Q 840 365 875 380 L 880 410 L 850 425 L 815 420 L 795 400 Z',
-];
+// Singapore (702) is too small to exist as a polygon at 1:110m — drawn as a marker
+const SINGAPORE: [number, number] = [103.82, 1.35];
+
+const OCEAN = '#F7F8FA';
+const LAND = '#E2E5EB';
+const LAND_BORDER = '#D2D6DE';
 
 function WorldMap({ caption }: { caption: string }) {
   return (
     <figure style={{ width: '100%', margin: 0 }}>
-      <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} width="100%" height="auto" role="img" aria-label={caption} style={{ display: 'block' }}>
-        <rect x="0" y="0" width={MAP_W} height={MAP_H} fill="#F7F8FA" />
-        {[125, 250, 375].map((y) => (
-          <line key={y} x1="0" y1={y} x2={MAP_W} y2={y} stroke="#EEF0F4" strokeWidth="1" />
-        ))}
-        {CONTINENT_PATHS.map((d, i) => (
-          <path key={i} d={d} fill="#E2E5EB" stroke="#D2D6DE" strokeWidth="1" />
-        ))}
-        {COUNTRIES.map((c) => {
-          const { x, y } = project(c.lat, c.lon);
-          return (
-            <g key={c.code}>
-              <circle cx={x} cy={y} r="14" fill={B.blue} opacity="0.18" />
-              <circle cx={x} cy={y} r="7" fill={B.blue} stroke={B.white} strokeWidth="2" />
-            </g>
-          );
-        })}
-      </svg>
+      <div style={{ width: '100%', backgroundColor: OCEAN, borderRadius: 12, overflow: 'hidden' }}>
+        <ComposableMap
+          projection="geoEqualEarth"
+          width={1000}
+          height={500}
+          projectionConfig={{ scale: 175 }}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+          role="img"
+          aria-label={caption}
+        >
+          <Geographies geography={GEO_URL}>
+            {({ geographies }) =>
+              geographies.map((geo) => {
+                const active = HIGHLIGHT.has(Number(geo.id));
+                const fill = active ? B.blue : LAND;
+                const geoStyle = { fill, stroke: LAND_BORDER, strokeWidth: 0.5, outline: 'none' };
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    style={{ default: geoStyle, hover: geoStyle, pressed: geoStyle }}
+                  />
+                );
+              })
+            }
+          </Geographies>
+          {/* Singapore — too small to render as a polygon at this scale */}
+          <Marker coordinates={SINGAPORE}>
+            <circle r={4} fill={B.blue} stroke={B.white} strokeWidth={1} />
+          </Marker>
+        </ComposableMap>
+      </div>
       <figcaption style={{ fontFamily: F.body, fontSize: 12, color: B.medGray, textAlign: 'center', marginTop: 12, fontStyle: 'italic' }}>
         {caption}
       </figcaption>

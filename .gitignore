@@ -45,3 +45,6 @@ yarn-error.log*
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+# Claude Code (local-only settings)
+.claude/settings.local.json
