@@ -2,6 +2,7 @@
 
 import { type CSSProperties } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { BRAND_COLORS, FONTS as F, type Lang } from '@/lib/constants';
 import { UI } from '@/lib/cases-data';
 import { SiteLayout } from '@/components/SiteLayout';
@@ -219,13 +220,10 @@ function Hero({ stripTitle, stripStats }: { stripTitle: string; stripStats: stri
   return (
     <div
       style={{
+        position: 'relative',
         width: '100%',
         height: '100%',
         backgroundColor: '#0A0F2C',
-        backgroundImage:
-          'linear-gradient(rgba(10,15,44,0.5), rgba(10,15,44,0.5)), url(/images/cases/marketplace-hero.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -233,12 +231,24 @@ function Hero({ stripTitle, stripStats }: { stripTitle: string; stripStats: stri
         textAlign: 'center',
         padding: 32,
         gap: 14,
+        overflow: 'hidden',
       }}
     >
-      <p style={{ fontFamily: F.body, fontSize: 12, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', margin: 0 }}>
+      <Image
+        src="/images/cases/marketplace-hero.png"
+        alt=""
+        fill
+        priority
+        quality={80}
+        sizes="(max-width: 768px) 100vw, 1152px"
+        style={{ objectFit: 'cover' }}
+      />
+      {/* Scrim para legibilidade do texto */}
+      <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(10,15,44,0.5)' }} />
+      <p style={{ position: 'relative', fontFamily: F.body, fontSize: 12, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', margin: 0 }}>
         {stripTitle}
       </p>
-      <p style={{ fontFamily: F.heading, fontWeight: 700, fontSize: 'clamp(1.1rem, 3.2vw, 1.9rem)', color: '#FFFFFF', margin: 0, lineHeight: 1.3 }}>
+      <p style={{ position: 'relative', fontFamily: F.heading, fontWeight: 700, fontSize: 'clamp(1.1rem, 3.2vw, 1.9rem)', color: '#FFFFFF', margin: 0, lineHeight: 1.3 }}>
         {stripStats}
       </p>
     </div>

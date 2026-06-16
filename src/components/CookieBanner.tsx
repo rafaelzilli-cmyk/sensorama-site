@@ -99,7 +99,7 @@ export function applyConsentScripts(prefs: CookiePrefs): void {
 /* ═══════════════════════════════════════════════════════════════
    TRANSLATIONS
 ═══════════════════════════════════════════════════════════════ */
-const Fnt = { body: "'Open Sans', sans-serif", heading: "'Unbounded', sans-serif" };
+const Fnt = { body: "var(--font-open-sans), 'Open Sans', sans-serif", heading: "var(--font-unbounded), 'Unbounded', sans-serif" };
 const Clr = { green: "#43E58E", black: "#000000", white: "#FFFFFF", blue: "#2F5BFF" };
 
 const L: Record<Lang, {

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getCookiePrefs, saveCookiePrefs } from "./CookieBanner";
 import { type Lang } from "@/lib/constants";
 
-const Fnt = { heading: "'Unbounded', sans-serif", body: "'Open Sans', sans-serif" };
+const Fnt = { heading: "var(--font-unbounded), 'Unbounded', sans-serif", body: "var(--font-open-sans), 'Open Sans', sans-serif" };
 const Clr = {
   blue: "#2F5BFF", green: "#43E58E", black: "#000000",
   medGray: "#6B6B6B", darkGray: "#2A2A2A", lightGray: "#F5F5F5", white: "#FFFFFF",

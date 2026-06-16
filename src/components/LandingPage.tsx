@@ -3,12 +3,16 @@
 import { useState, useContext, createContext, useRef } from "react";
 import type { ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import dynamic from "next/dynamic";
 import { BRAND_COLORS as B, FONTS as F, type Lang } from "@/lib/constants";
 import { getCaseBySlug } from "@/lib/cases-data";
-import { ContactModal } from "@/components/ContactModal";
-import { CookieBanner } from "@/components/CookieBanner";
-import { CookiePage } from "@/components/CookiePage";
-import { ConsentManager } from "@/components/ConsentManager";
+
+// Overlays carregados sob demanda (client-only) — fora do bundle inicial
+const ContactModal = dynamic(() => import("@/components/ContactModal").then((m) => m.ContactModal), { ssr: false, loading: () => null });
+const CookieBanner = dynamic(() => import("@/components/CookieBanner").then((m) => m.CookieBanner), { ssr: false });
+const CookiePage = dynamic(() => import("@/components/CookiePage").then((m) => m.CookiePage), { ssr: false });
+const ConsentManager = dynamic(() => import("@/components/ConsentManager").then((m) => m.ConsentManager), { ssr: false });
 
 export type { Lang };
 
@@ -535,21 +539,21 @@ const CLIENT_LOGOS: LogoItem[] = [
 function CaseVisualJJ() {
   return (
     <div style={{ width: "100%", borderRadius: 12, overflow: "hidden", aspectRatio: "16/10", backgroundColor: "#EAE8FF", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-      <img src={caseImgJJ} alt="Contact Center Operations case study by Sensorama Design" width="400" height="250" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }} />
+      <Image src={caseImgJJ} alt="Contact Center Operations case study by Sensorama Design" width={400} height={250} sizes="400px" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", height: "auto" }} />
     </div>
   );
 }
 function CaseVisualNubank() {
   return (
     <div style={{ width: "100%", borderRadius: 12, overflow: "hidden", aspectRatio: "16/10", backgroundColor: "#000000", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-      <img src={caseImgNubank} alt="Credit & Financial Experience case study by Sensorama Design" width="400" height="250" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }} />
+      <Image src={caseImgNubank} alt="Credit & Financial Experience case study by Sensorama Design" width={400} height={250} sizes="400px" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", height: "auto" }} />
     </div>
   );
 }
 function CaseVisualBees() {
   return (
     <div style={{ width: "100%", borderRadius: 12, overflow: "hidden", aspectRatio: "16/10", backgroundColor: "#F5F5F5", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-      <img src={caseImgBees} alt="Operational UX & Journey case study by Sensorama Design" width="400" height="250" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }} />
+      <Image src={caseImgBees} alt="Operational UX & Journey case study by Sensorama Design" width={400} height={250} sizes="400px" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", height: "auto" }} />
     </div>
   );
 }
@@ -808,6 +812,39 @@ export function Navbar({ lang, langUrls, sectionHrefPrefix = "" }: { lang: Lang;
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   LITE YOUTUBE — click-to-play facade (sem carregar o player no load)
+═══════════════════════════════════════════════════════════════ */
+function LiteYouTube({ id, title }: { id: string; title: string }) {
+  const [play, setPlay] = useState(false);
+  if (play) {
+    return (
+      <iframe
+        src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&rel=0`}
+        title={title}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        style={{ width: "100%", height: "100%", border: "none", display: "block" }}
+      />
+    );
+  }
+  return (
+    <button
+      onClick={() => setPlay(true)}
+      aria-label={`Reproduzir vídeo: ${title}`}
+      style={{
+        width: "100%", height: "100%", border: "none", cursor: "pointer", padding: 0,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        background: "linear-gradient(135deg, #0A0F2C 0%, #14193b 60%, #0A0F2C 100%)",
+      }}
+    >
+      <span style={{ width: 72, height: 72, borderRadius: "50%", backgroundColor: B.green, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 24px rgba(0,0,0,0.4)" }}>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill={B.black} aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+      </span>
+    </button>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
    1. HERO  (dark bg)
 ═══════════════════════════════════════════════════════════════ */
 function HeroSection() {
@@ -821,13 +858,16 @@ function HeroSection() {
           {/* Left — illustration (desktop) / logo (mobile) */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
             {/* Desktop: eye illustration */}
-            <img
+            <Image
               src={imgEye}
               alt="Sensorama Design — innovation consultancy visual identity"
-              width="440"
-              height="440"
+              width={440}
+              height={440}
+              priority
+              quality={80}
+              sizes="(max-width: 768px) 0px, 440px"
               className="hidden md:block"
-              style={{ width: "100%", maxWidth: 440 }}
+              style={{ width: "100%", maxWidth: 440, height: "auto" }}
             />
             {/* Mobile: logo */}
             <div className="md:hidden" style={{ padding: "24px 0 8px" }}>
@@ -854,7 +894,7 @@ function HeroSection() {
             {/* Trust badges */}
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
               {[t.hero.badge, t.hero.weconnect, t.hero.lgpd].map((text) => (
-                <li key={text} style={{ fontFamily: F.body, fontSize: 13, color: "rgba(255,255,255,0.4)", display: "flex", alignItems: "center", gap: 6 }}>
+                <li key={text} style={{ fontFamily: F.body, fontSize: 13, color: "rgba(255,255,255,0.7)", display: "flex", alignItems: "center", gap: 6 }}>
                   <svg style={{ width: 14, height: 14, flexShrink: 0 }} viewBox="0 0 24 24" fill="none" stroke={B.green} strokeWidth={2.5} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
                   {text}
                 </li>
@@ -862,16 +902,9 @@ function HeroSection() {
             </ul>
           </div>
         </div>
-        {/* Video — full width */}
+        {/* Video — full width (click-to-play facade: não carrega o player do YouTube até o clique) */}
         <div style={{ width: "100%", borderRadius: 16, overflow: "hidden", aspectRatio: "16/9", boxShadow: "0 8px 40px rgba(0,0,0,0.5)" }}>
-          <iframe
-            src="https://www.youtube.com/embed/ceRBPMGFtnI?autoplay=1&mute=1&playsinline=1&loop=1&playlist=ceRBPMGFtnI"
-            title="Sensorama Design — Innovation Consultancy Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            loading="lazy"
-            style={{ width: "100%", height: "100%", border: "none", display: "block" }}
-          />
+          <LiteYouTube id="ceRBPMGFtnI" title="Sensorama Design — Innovation Consultancy Video" />
         </div>
       </div>
     </section>
@@ -889,7 +922,7 @@ function SocialProofSection() {
     <section aria-label="Clients and partners" style={{ backgroundColor: "#000000", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "48px 0" }}>
       <div style={{ maxWidth: 1152, margin: "0 auto", paddingLeft: 32, paddingRight: 32, textAlign: "center", marginBottom: 40 }}>
         <p style={{ fontFamily: F.body, color: B.white, fontWeight: 600, fontSize: "clamp(1rem, 1.5vw, 1.2rem)", marginBottom: 8 }}>{t.social.context1}</p>
-        <p style={{ fontFamily: F.body, color: "rgba(255,255,255,0.45)", fontSize: "clamp(0.9rem, 1.2vw, 1rem)" }}>{t.social.context2}</p>
+        <p style={{ fontFamily: F.body, color: "rgba(255,255,255,0.65)", fontSize: "clamp(0.9rem, 1.2vw, 1rem)" }}>{t.social.context2}</p>
       </div>
       {/* Client logos list — static for crawlers */}
       <p className="sr-only">
@@ -907,14 +940,16 @@ function SocialProofSection() {
               height: 36,
               ...(logo.whiteBg ? { backgroundColor: B.white, borderRadius: 6, padding: "4px 10px" } : {}),
             }}>
-              <img
+              <Image
                 src={logo.src}
                 alt={logo.alt}
                 width={logo.whiteBg ? 80 : 130}
                 height={logo.whiteBg ? 28 : 34}
+                sizes="130px"
                 style={{
                   maxHeight: logo.whiteBg ? 28 : 34,
                   maxWidth: logo.whiteBg ? 80 : 130,
+                  height: "auto",
                   objectFit: "contain",
                   opacity: logo.whiteBg ? 1 : 0.82,
                   userSelect: "none",
@@ -1080,6 +1115,7 @@ function CaseHighlightsSection({ lang }: { lang: Lang }) {
                       {CASE_SLUG_BY_VISUAL[cas.visual] && (
                         <Link
                           href={`${langPrefix}/cases/${CASE_SLUG_BY_VISUAL[cas.visual]}`}
+                          aria-label={`${t.cases.seeCase}: ${cas.title}`}
                           style={{
                             marginTop: 8,
                             alignSelf: "flex-start",
@@ -1148,13 +1184,14 @@ function OurApproachSection() {
             {t.approach.text}
           </p>
         </div>
-        <img
+        <Image
           src={imgWorkshop}
           alt="Sensorama Design team workshop — collaborative innovation session"
-          width="1088"
-          height="600"
-          style={{ width: "100%", borderRadius: 16, display: "block" }}
-          loading="lazy"
+          width={1088}
+          height={600}
+          quality={80}
+          sizes="(max-width: 768px) 100vw, 1088px"
+          style={{ width: "100%", height: "auto", borderRadius: 16, display: "block" }}
         />
       </div>
     </section>
@@ -1279,19 +1316,20 @@ function AboutSection() {
               <div style={{ width: 36, height: 36, borderRadius: 8, backgroundColor: "#E8ECFF", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
                 {featureIcons[i]}
               </div>
-              <h4 style={{ fontFamily: F.heading, fontWeight: 700, fontSize: "0.9rem", color: B.black, marginBottom: 8 }}>{f.title}</h4>
+              <h3 style={{ fontFamily: F.heading, fontWeight: 700, fontSize: "0.9rem", color: B.black, marginBottom: 8 }}>{f.title}</h3>
               <p style={{ fontFamily: F.body, fontSize: 14, color: B.medGray, lineHeight: 1.7, margin: 0 }}>{f.desc}</p>
             </article>
           ))}
         </div>
         {/* Team image */}
-        <img
+        <Image
           src={imgTeam}
           alt="Sensorama Design team — women-led innovation consultancy working across cultures"
-          width="1088"
-          height="600"
-          style={{ width: "100%", borderRadius: 16, display: "block" }}
-          loading="lazy"
+          width={1088}
+          height={600}
+          quality={80}
+          sizes="(max-width: 768px) 100vw, 1088px"
+          style={{ width: "100%", height: "auto", borderRadius: 16, display: "block" }}
         />
       </div>
     </section>
@@ -1350,7 +1388,7 @@ export function FooterSection() {
           </div>
           {/* Navigation */}
           <nav aria-label="Footer navigation">
-            <p style={{ fontFamily: F.body, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 20 }}>{t.footer.navLabel}</p>
+            <p style={{ fontFamily: F.body, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)", marginBottom: 20 }}>{t.footer.navLabel}</p>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
               {t.footer.navLinks.map((l) => {
                 const footerLinkStyle = { fontFamily: F.body, fontSize: 14, color: "rgba(255,255,255,0.6)", textDecoration: "none" } as const;
@@ -1368,7 +1406,7 @@ export function FooterSection() {
             <div style={{ marginTop: 24, display: "flex", gap: 16 }}>
               {t.footer.socials.map((s) => (
                 <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer"
-                   style={{ fontFamily: F.body, fontSize: 13, color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>
+                   style={{ fontFamily: F.body, fontSize: 13, color: "rgba(255,255,255,0.65)", textDecoration: "none" }}>
                   {s.label}
                 </a>
               ))}
@@ -1376,45 +1414,45 @@ export function FooterSection() {
           </nav>
           {/* Contact + certifications */}
           <div>
-            <p style={{ fontFamily: F.body, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 20 }}>{t.footer.contactLabel}</p>
+            <p style={{ fontFamily: F.body, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)", marginBottom: 20 }}>{t.footer.contactLabel}</p>
             <a href="mailto:contato@sensoramadesign.com" style={{ fontFamily: F.body, fontSize: 14, color: B.green, textDecoration: "none" }}>
               contato@sensoramadesign.com
             </a>
             <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 20 }}>
-              <img
+              <Image
                 src={imgWeconnect}
                 alt="WEConnect International — Women's Business Enterprise certified"
-                width="150"
-                height="50"
-                style={{ maxWidth: 150, opacity: 0.75, filter: "grayscale(1) brightness(1.6)" }}
-                loading="lazy"
+                width={150}
+                height={50}
+                sizes="150px"
+                style={{ maxWidth: 150, height: "auto", opacity: 0.75, filter: "grayscale(1) brightness(1.6)" }}
               />
-              <img
+              <Image
                 src={imgLgpdSeal}
                 alt="Empresa Verificada LGPD Data Guide — LGPD compliant company"
-                width="200"
-                height="60"
-                style={{ maxWidth: 200 }}
-                loading="lazy"
+                width={200}
+                height={60}
+                sizes="200px"
+                style={{ maxWidth: 200, height: "auto" }}
               />
             </div>
           </div>
         </div>
         {/* Bottom bar */}
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 28, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16 }}>
-          <span style={{ fontFamily: F.body, fontSize: 12, color: "rgba(255,255,255,0.25)" }}>{t.footer.copyright}</span>
+          <span style={{ fontFamily: F.body, fontSize: 12, color: "rgba(255,255,255,0.55)" }}>{t.footer.copyright}</span>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
             {t.footer.legalLinks.map((l) => (
-              <Link key={l.label} href={l.href} style={{ fontFamily: F.body, fontSize: 12, color: "rgba(255,255,255,0.3)", textDecoration: "none" }}
+              <Link key={l.label} href={l.href} style={{ fontFamily: F.body, fontSize: 12, color: "rgba(255,255,255,0.6)", textDecoration: "none" }}
                 onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; }}
-                onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; }}
               >{l.label}</Link>
             ))}
             <button
               onClick={openCookiePage}
-              style={{ fontFamily: F.body, fontSize: 12, color: "rgba(255,255,255,0.3)", background: "none", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 5, cursor: "pointer", padding: "3px 10px" }}
-              onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.7)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
+              style={{ fontFamily: F.body, fontSize: 12, color: "rgba(255,255,255,0.6)", background: "none", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 5, cursor: "pointer", padding: "3px 10px" }}
+              onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.7)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.6)"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
             >
               {t.footer.manageCookies}
             </button>

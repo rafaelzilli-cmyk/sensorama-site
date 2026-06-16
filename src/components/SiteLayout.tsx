@@ -1,12 +1,15 @@
 'use client';
 
 import { useState, type ReactNode } from "react";
-import { ContactModal } from "./ContactModal";
-import { CookieBanner } from "./CookieBanner";
-import { CookiePage } from "./CookiePage";
-import { ConsentManager } from "./ConsentManager";
+import dynamic from "next/dynamic";
 import { Navbar, FooterSection, LangCtx, UiCtx, T } from "@/components/LandingPage";
 import { type Lang } from "@/lib/constants";
+
+// Overlays carregados sob demanda (client-only) — fora do bundle inicial
+const ContactModal = dynamic(() => import("./ContactModal").then((m) => m.ContactModal), { ssr: false, loading: () => null });
+const CookieBanner = dynamic(() => import("./CookieBanner").then((m) => m.CookieBanner), { ssr: false });
+const CookiePage = dynamic(() => import("./CookiePage").then((m) => m.CookiePage), { ssr: false });
+const ConsentManager = dynamic(() => import("./ConsentManager").then((m) => m.ConsentManager), { ssr: false });
 
 type Props = {
   lang: Lang;

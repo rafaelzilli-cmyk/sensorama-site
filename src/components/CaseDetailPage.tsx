@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { BRAND_COLORS as B, FONTS as F, type Lang } from '@/lib/constants';
 import { UI, getCaseBySlug } from '@/lib/cases-data';
 import { MarketplaceGlobalCasePage, MARKETPLACE_GLOBAL_SLUG } from '@/components/MarketplaceGlobalCasePage';
@@ -179,12 +180,10 @@ function CaseHero({ visual, alt }: { visual: string; alt: string }) {
     return <MarketplaceExpansionHero />;
   }
   if (visual === 'jj') {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={caseImgJJ} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />;
+    return <Image src={caseImgJJ} alt={alt} width={1200} height={675} sizes="(max-width: 768px) 100vw, 1100px" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />;
   }
   if (visual === 'nubank') {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={caseImgNubank} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />;
+    return <Image src={caseImgNubank} alt={alt} width={1200} height={675} sizes="(max-width: 768px) 100vw, 1100px" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />;
   }
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: visualBg[visual] ?? B.lightGray }}>

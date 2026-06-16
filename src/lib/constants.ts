@@ -12,8 +12,8 @@ export const BRAND_COLORS = {
 } as const;
 
 export const FONTS = {
-  heading: "'Unbounded', sans-serif",
-  body: "'Open Sans', sans-serif",
+  heading: "var(--font-unbounded), 'Unbounded', sans-serif",
+  body: "var(--font-open-sans), 'Open Sans', sans-serif",
 } as const;
 
 export type Lang = 'pt' | 'en' | 'es';

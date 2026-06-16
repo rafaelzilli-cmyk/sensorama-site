@@ -1,7 +1,22 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
+import { Open_Sans, Unbounded } from 'next/font/google';
 import { SITE_URL } from '@/lib/constants';
 import '@/styles/globals.css';
+
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-open-sans',
+});
+
+const unbounded = Unbounded({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-unbounded',
+});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -187,7 +202,7 @@ export default function RootLayout({
   const csId = process.env.NEXT_PUBLIC_CONTENTSQUARE_ID || '6dfc7208f63b6';
 
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={`${openSans.variable} ${unbounded.variable}`}>
       <head>
         {/* JSON-LD: Organization (static) */}
         <script
